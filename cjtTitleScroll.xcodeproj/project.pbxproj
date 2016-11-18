@@ -15,6 +15,7 @@
 		131738CD1DDF3A4D0078F4D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 131738CB1DDF3A4D0078F4D3 /* LaunchScreen.storyboard */; };
 		131738D81DDF3A4D0078F4D3 /* cjtTitleScrollTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 131738D71DDF3A4D0078F4D3 /* cjtTitleScrollTests.m */; };
 		131738E31DDF3A4D0078F4D3 /* cjtTitleScrollUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 131738E21DDF3A4D0078F4D3 /* cjtTitleScrollUITests.m */; };
+		131738F21DDF3DA90078F4D3 /* CJTTitleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 131738F11DDF3DA90078F4D3 /* CJTTitleScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		131738DE1DDF3A4D0078F4D3 /* cjtTitleScrollUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cjtTitleScrollUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		131738E21DDF3A4D0078F4D3 /* cjtTitleScrollUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cjtTitleScrollUITests.m; sourceTree = "<group>"; };
 		131738E41DDF3A4D0078F4D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		131738F01DDF3DA90078F4D3 /* CJTTitleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJTTitleScrollView.h; sourceTree = "<group>"; };
+		131738F11DDF3DA90078F4D3 /* CJTTitleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJTTitleScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				131738C11DDF3A4C0078F4D3 /* AppDelegate.m */,
 				131738C31DDF3A4C0078F4D3 /* ViewController.h */,
 				131738C41DDF3A4C0078F4D3 /* ViewController.m */,
+				131738F01DDF3DA90078F4D3 /* CJTTitleScrollView.h */,
+				131738F11DDF3DA90078F4D3 /* CJTTitleScrollView.m */,
 				131738C61DDF3A4D0078F4D3 /* Main.storyboard */,
 				131738C91DDF3A4D0078F4D3 /* Assets.xcassets */,
 				131738CB1DDF3A4D0078F4D3 /* LaunchScreen.storyboard */,
@@ -276,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				131738F21DDF3DA90078F4D3 /* CJTTitleScrollView.m in Sources */,
 				131738C51DDF3A4C0078F4D3 /* ViewController.m in Sources */,
 				131738C21DDF3A4C0078F4D3 /* AppDelegate.m in Sources */,
 				131738BF1DDF3A4C0078F4D3 /* main.m in Sources */,
