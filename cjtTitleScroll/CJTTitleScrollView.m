@@ -80,7 +80,7 @@
         
         [self addSubview:btn];
         [self.BtnArr addObject:btn];
-        if (self.showLine) {
+        if (self.showLine && i>0) {
             //增加竖线
             UIView  *verLine    =   [[UIView alloc] initWithFrame:CGRectMake(i*_ButtonWidth, 8, 1, self.frame.size.height-16)];
             verLine.backgroundColor =   [UIColor lightGrayColor];
@@ -93,6 +93,7 @@
     [self addSubview:self.linelabel];
 }
 
+#pragma mark-   点击事件
 /**
  点击事件
  */
@@ -134,6 +135,7 @@
     
 }
 
+#pragma mark-   刷新事件
 /**
  刷新控件
  */
