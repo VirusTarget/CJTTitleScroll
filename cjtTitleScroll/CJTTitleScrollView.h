@@ -11,12 +11,16 @@
 @interface CJTTitleScrollView : UIScrollView
 
 typedef  void(^sectionTitleViewBlock)(NSInteger num);
+/// 按钮点击回调
+@property (nonatomic, strong) sectionTitleViewBlock titleClick;
+/// 底部红线线的长度
+@property (nonatomic, assign) NSInteger LineWidth;
+/// 显示竖线，默认为NO
+@property (nonatomic, assign) BOOL  showLine;
+/// 设置同屏最多的按钮个数
+@property (nonatomic, assign) double    maxNumber;
 
-@property (nonatomic, strong) sectionTitleViewBlock titleClick; //block回调
-@property (nonatomic, assign) NSInteger LineWidth;              //底部红线线的长度
-@property (nonatomic, assign) BOOL  showLine;                   //显示竖线，默认为NO
-@property (nonatomic, assign) double    maxNumber;              //设置同屏最多的按钮个数
-
+#pragma mark- method
 /**
  通过标题数组返回头部滚动条
  
@@ -30,6 +34,11 @@ typedef  void(^sectionTitleViewBlock)(NSInteger num);
  @param array 标题数组
  */
 - (instancetype)initWithTitleArr:(NSArray *)array;
+
+/**
+ 通过设置尺寸初始化
+ */
+- (instancetype)initWithFrame:(CGRect)frame;
 
 /**
  *  通过标题数组进行设置头部滚动条

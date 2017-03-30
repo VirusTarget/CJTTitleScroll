@@ -18,7 +18,6 @@
 @end
 @implementation CJTTitleScrollView
 
-#pragma mark-   初始化
 + (CJTTitleScrollView *)viewWithTitleArr:(NSArray *)array {
     return  [[CJTTitleScrollView alloc] initWithTitleArr:array];;
 }
@@ -41,7 +40,6 @@
     return self;
 }
 
-#pragma mark-
 /**
  *  通过标题数组进行设置头部滚动条
  *
@@ -51,38 +49,31 @@
     
     self.titleArr   =   [NSArray arrayWithArray:array];
     if (array.count < self.maxNumber) {
-        _ButtonWidth = _LineWidth = self.bounds.size.width/array.count;
+        _ButtonWidth = _LineWidth = CGRectGetWidth(self.bounds)/array.count;
     }
     else {
-        _ButtonWidth = _LineWidth = self.bounds.size.width/self.maxNumber;
+        _ButtonWidth = _LineWidth = CGRectGetWidth(self.bounds)/self.maxNumber;
     }
     
-    self.linelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height-2, _LineWidth, 2)];
-    [self.linelabel setBackgroundColor:[UIColor colorWithRed:39/255.0 green:148/255.0 blue:1 alpha:1]];
-    
-    UILabel *line   =   [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height-0.5, _LineWidth*array.count, -0.5)];
+    UILabel *line   =   [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.bounds)-0.5, _LineWidth*array.count, -0.5)];
     line.backgroundColor    =   [UIColor grayColor];
     [self addSubview:line];
     self.BtnArr = [NSMutableArray array];
     for (int i=0; i<array.count; i++) {
         //初始化所有btn
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(i*_ButtonWidth, 0, _ButtonWidth,self.frame.size.height)];
-        [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
-        btn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        btn.titleLabel.font     = [UIFont systemFontOfSize:16];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor colorWithRed:39/255.0 green:148/255.0 blue:1 alpha:1] forState:UIControlStateSelected];
+        UIButton *btn = [self createBtn];
+        btn.frame = CGRectMake(i*_ButtonWidth, 0, _ButtonWidth,CGRectGetHeight(self.bounds));
         if (i == 0) {//初始化第一个按钮
             btn.selected    =   YES;
         }
         [btn setTitle:array[i] forState:UIControlStateNormal];
-        btn.titleLabel.adjustsFontSizeToFitWidth    =   YES;
         
         [self addSubview:btn];
         [self.BtnArr addObject:btn];
-        if (self.showLine && i>0) {
+        
+        if (self.showLine && i>0) {//如果开启竖线
             //增加竖线
-            UIView  *verLine    =   [[UIView alloc] initWithFrame:CGRectMake(i*_ButtonWidth, 8, 1, self.frame.size.height-16)];
+            UIView  *verLine    =   [[UIView alloc] initWithFrame:CGRectMake(i*_ButtonWidth, 8, 1, CGRectGetHeight(self.bounds)-16)];
             verLine.backgroundColor =   [UIColor lightGrayColor];
             [self addSubview:verLine];
         }
@@ -93,9 +84,23 @@
     [self addSubview:self.linelabel];
 }
 
-#pragma mark-   点击事件
 /**
- 点击事件
+ 初始化Btn
+ */
+- (UIButton *)createBtn{
+    UIButton *btn = [UIButton buttonWithType:0];
+    btn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    btn.titleLabel.font     = [UIFont systemFontOfSize:16];
+    btn.titleLabel.adjustsFontSizeToFitWidth    =   YES;
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor colorWithRed:39/255.0 green:148/255.0 blue:1 alpha:1] forState:UIControlStateSelected];
+    [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
+    return btn;
+}
+
+#pragma mark- event response
+/**
+ 点击某个按钮
  */
 - (void)click:(UIButton*)button {
     NSInteger btnIndex = 0 ;
@@ -111,7 +116,7 @@
     }
     
     //计算获得偏移量，
-    CGFloat index = btnIndex*_ButtonWidth- (self.frame.size.width-_ButtonWidth)/2;
+    CGFloat index = btnIndex*_ButtonWidth- (CGRectGetWidth(self.bounds)-_ButtonWidth)/2;
     index = index<0?0:index;
     index = index>self.contentSize.width-CGRectGetWidth(self.frame)?self.contentSize.width-CGRectGetWidth(self.frame):index;
     
@@ -119,7 +124,7 @@
     [self setContentOffset:CGPointMake(index, 0) animated:YES];
     CAKeyframeAnimation *animation  =   [CAKeyframeAnimation animationWithKeyPath:@"position"];
     
-    animation.values    =   @[[NSValue valueWithCGPoint:CGPointMake(CGRectGetMidX(self.linelabel.frame), CGRectGetMaxY(self.linelabel.frame))],[NSValue valueWithCGPoint:CGPointMake(btnIndex*_ButtonWidth+_ButtonWidth/2.0, self.frame.size.height-1)]];
+    animation.values    =   @[[NSValue valueWithCGPoint:CGPointMake(CGRectGetMidX(self.linelabel.frame), CGRectGetMaxY(self.linelabel.frame))],[NSValue valueWithCGPoint:CGPointMake(btnIndex*_ButtonWidth+_ButtonWidth/2.0, CGRectGetHeight(self.bounds)-1)]];
     animation.repeatCount = 1;
     animation.removedOnCompletion = NO;
     animation.fillMode  = kCAFillModeForwards;
@@ -127,7 +132,7 @@
     [self.linelabel.layer addAnimation:animation forKey:nil];
     
     //动画结束后需要设置结束后的位置
-    self.linelabel.frame = CGRectMake(btnIndex*_ButtonWidth+(_ButtonWidth-_LineWidth), self.frame.size.height-2, _LineWidth, 2);
+    self.linelabel.frame = CGRectMake(btnIndex*_ButtonWidth+(_ButtonWidth-_LineWidth), CGRectGetHeight(self.bounds)-2, _LineWidth, 2);
     
     if (self.titleClick) {
         self.titleClick(btnIndex);
@@ -135,11 +140,21 @@
     
 }
 
-#pragma mark-   刷新事件
+#pragma mark- public method
 /**
  刷新控件
  */
 - (void)refresh {
+    /*
+     定位到点击的是哪个按钮
+    int i=0;
+    for (; i<self.BtnArr.count; i++) {
+        UIButton *btn   =   self.BtnArr[i];
+        if (btn.selected) {
+            break;
+        }
+    }
+     */
     [self.BtnArr removeAllObjects];
     for (UIView *view in self.subviews) {
         [view removeFromSuperview];
@@ -150,39 +165,46 @@
     }
 }
 
-//定位索引位置
+/**
+ 定位索引位置
+ */
 - (void)setByIndex:(NSInteger)nowindex {
     UIButton *button = self.BtnArr[nowindex];
     [self click:button];
 }
 
-//设置线的长度
-- (void)setLineWidth:(NSInteger)LineWidth {
-    if (LineWidth > self.ButtonWidth) {
-        self.LineWidth  =   self.ButtonWidth;
-        return;
+#pragma mark- getter/setter
+- (UILabel *)linelabel {
+    if (!_linelabel) {
+        _linelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.bounds)-2, _LineWidth, 2)];
+        [_linelabel setBackgroundColor:[UIColor colorWithRed:39/255.0 green:148/255.0 blue:1 alpha:1]];
     }
+    return _linelabel;
+}
+
+- (void)setLineWidth:(NSInteger)LineWidth {
+    if (LineWidth > self.ButtonWidth) { // 判断线的宽度，线比按钮宽，则
+        LineWidth  =   self.ButtonWidth;
+    }
+    
     CGRect rect =   self.linelabel.frame;
     rect.size.width =   LineWidth;
     rect.origin.x   +=  (self.ButtonWidth-LineWidth)/2;
     [UIView animateWithDuration:0.3 animations:^{
         self.linelabel.frame    =   rect;
     }];
+    
     _LineWidth  =   LineWidth;
 }
 
-//设置每屏最大数
 - (void)setMaxNumber:(double)maxNumber {
     _maxNumber  =   maxNumber;
     [self refresh];
     
 }
 
-//设置是否显示竖线
 - (void)setShowLine:(BOOL)showLine {
     _showLine   =   showLine;
     [self refresh];
-    
 }
-
 @end

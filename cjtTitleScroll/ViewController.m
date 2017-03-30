@@ -10,7 +10,9 @@
 #import "CJTTitleScrollView.h"
 
 @interface ViewController ()
-
+{
+    CJTTitleScrollView  *title;
+}
 @end
 
 @implementation ViewController
@@ -18,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    CJTTitleScrollView  *title  =   [CJTTitleScrollView viewWithTitleArr:@[@"默认",@"修改线长度",@"修改出现竖线",@"修改每屏数量"]];
+    title  =   [CJTTitleScrollView viewWithTitleArr:@[@"默认",@"修改线长度",@"修改出现竖线",@"修改每屏数量"]];
     title   =   [[CJTTitleScrollView alloc] initWithFrame:CGRectMake(0, 20, CGRectGetWidth([UIScreen mainScreen].bounds), 44)];
     [title AddArrView:@[@"默认",@"修改线长度",@"修改出现竖线",@"修改每屏数量"]];
     __weak  typeof(title)   weaktitle   =   title;
@@ -32,10 +34,10 @@
                 weaktitle.LineWidth =  50;
                 break;
             case 2:
-                weaktitle.showLine  =   YES;
+                //weaktitle.showLine  =   !weaktitle.showLine;
                 break;
             case 3:
-                weaktitle.maxNumber =   2;
+                //weaktitle.maxNumber =   2;
                 break;
             default:
                 break;
@@ -43,6 +45,10 @@
     };
     
     [self.view addSubview:title];
+}
+- (IBAction)touch:(id)sender {
+    
+    title.showLine = !title.showLine;
 }
 
 
