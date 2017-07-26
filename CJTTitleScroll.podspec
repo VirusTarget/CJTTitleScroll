@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "CJTTitleScroll"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "A easy use titleScroll."
 
   # This description is used to generate tags and improve search results.
